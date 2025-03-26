@@ -31,7 +31,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
 
     if (gameId === "game1") {
         // Correct way: Use the full absolute path directly
-        const exePath = 'D:\\launcher_games\\Metal.Bringer.v1.01.6\\Metal.Bringer.v1.01.6\\MetalBringer.exe';
+        const exePath = '';
 
         exec(`"${exePath}"`, (error, stdout, stderr) => {
             if (error) {
@@ -43,7 +43,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
     }
     if (gameId === "game2") {
         // Correct way: Use the full absolute path directly
-        const exePath = 'D:\\launcher_games\\The.Last.Faith.v1.5.2.ALL.DLC\\The.Last.Faith.v1.5.2.ALL.DLC\\The Last Faith.exe';
+        const exePath = '';
 
         exec(`"${exePath}"`, (error, stdout, stderr) => {
             if (error) {
@@ -55,7 +55,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
     }
     if (gameId === "game3") {
         // Correct way: Use the full absolute path directly
-        const exePath = 'D:\\launcher_games\\WORLD.OF.HORROR.v1.01\\WORLD.OF.HORROR.v1.01\\worldofhorror.exe';
+        const exePath = 'e';
 
         exec(`"${exePath}"`, (error, stdout, stderr) => {
             if (error) {
@@ -67,7 +67,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
     }
     if (gameId === "game4") {
         // Correct way: Use the full absolute path directly
-        const exePath = 'D:\\launcher_games\\Grounded.v1.4.6.4706\\Grounded.v1.4.6.4706\\Grounded.exe';
+        const exePath = '';
 
         exec(`"${exePath}"`, (error, stdout, stderr) => {
             if (error) {
@@ -78,7 +78,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
         });
     }
     if (gameId === "game5") {
-        const exePath = "D:\\launcher_games\\Red.Dead.Redemption\\Red_Dead_Redemption\\RDR.exe";
+        const exePath = "";
 
         shell.openPath(exePath).then(result => {
             if (result) {
@@ -87,7 +87,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
         });
     }
     if (gameId === "game6") {
-        const exePath = "D:\\launcher_games\\Palworld.v0.5.0.67935\\Palworld.v0.5.0.67935\\Palworld.exe";
+        const exePath = "";
 
         shell.openPath(exePath).then(result => {
             if (result) {
@@ -96,7 +96,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
         });
     }
     if (gameId === "game7") {
-        const exePath = "D:\\launcher_games\\Geneforge.1.Mutagen\\Geneforge.1.Mutagen\\Geneforge Mutagen.exe";
+        const exePath = "";
 
         shell.openPath(exePath).then(result => {
             if (result) {
@@ -105,7 +105,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
         });
     }
     if (gameId === "game8") {
-        const exePath = "D:\\launcher_games\\TMNT.SF.v2025.02.05.ALL.DLC\\TMNT.SF.v2025.02.05.ALL.DLC\\TMNTSF.exe";
+        const exePath = "";
 
         shell.openPath(exePath).then(result => {
             if (result) {
@@ -114,7 +114,7 @@ ipcMain.on('launch-game', (event, gameId, gameTitle) => {
         });
     }
     if (gameId === "game9") {
-        const exePath = "D:\\launcher_games\\Zompiercer.v16.8t\\Zompiercer.v16.8t\\Zompiercer.exe";
+        const exePath = "";
 
         shell.openPath(exePath).then(result => {
             if (result) {
