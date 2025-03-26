@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>ZeroE Launcher</title>
+</head>
+<body>
+    <img src="images/metal_bringer.jpg" id = "game1" alt="Metal Bringer" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    <img src="images/the_last_faith.jpg" id = "game2" alt="The Last Faith" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    <img src="images/world_of_horror.jpg" id = "game3" alt="World Of Horror" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    <img src="images/grounded.jpg" id = "game4" alt="Grounded" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    <img src="images/red_dead_redemption.jpg" id = "game5" alt="Red Dead Redemption" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    <img src="images/palworld.jpg" id = "game6" alt="Palworld" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    <img src="images/geneforge_mutagen.jpg" id = "game7" alt="Geneforge: Mutagen" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)"> 
+    <img src="images/tmnt_splintered_fate.jpg" id = "game8" alt="Teenage Mutant Ninja Turtles: Splintered Fate" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    <img src="images/zompiercer.jpg" id = "game9" alt="Zompiercer" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
+    
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        function increaseSize(img) {
+            img.style.transform = "scale(1.2)";  // Increases size by 20%
+            img.style.transition = "transform 0.3s ease";  // Smooth animation
+        }
+
+        function resetSize(img) {
+            img.style.transform = "scale(1)";  // Resets to original size
+        }
+
+        function launchGame(gameId)
+        {
+            console.log("Launching game with ID:", gameId);
+            
+            let gameElement = document.getElementById(gameId);
+            if (!gameElement) return;
+
+            let gameTitle = gameElement.alt;
+
+            if (gameTitle) {
+                ipcRenderer.send('launch-game', gameId, gameTitle); // Send the game title to the main process
+                playDing();
+                flashLight(gameId);
+            } else {
+                console.error("Game title is undefined or missing!");
+            }
+        }
+        function playDing()
+        {
+            let dingSound = new Audio('audio/game_select.mp3');
+            dingSound.play();
+        }
+        function flashLight(gameId)
+        {
+            let gameElement = document.getElementById(gameId);
+
+            let isBlack = false;
+            let interval = setInterval(() => {
+                gameElement.style.border = isBlack ? "3px solid rgb(255, 255, 255)" : "3px solid black";
+                isBlack = !isBlack;
+            }, 50); // Toggle every 50ms
+
+            // Stop flashing after 2 seconds
+            setTimeout(() => {
+                clearInterval(interval);
+                gameElement.style.border = "3px solid rgb(255, 255, 255)"; // Reset border
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
