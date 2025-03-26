@@ -146,6 +146,6 @@ rpc.on('ready', () => {
     console.log('Connected to Discord!');
 });
 
-rpc.login({ clientId: '1352974194811469964' }).catch(console.error);
+rpc.login({ clientId: '' }).catch(console.error);
 
 //Discord Integration--------------------------------------------------------
