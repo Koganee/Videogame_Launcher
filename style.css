@@ -1,15 +1,223 @@
+/* General Styles */
 body {
-    background-color: #102fdb;
-    font-family: Arial, sans-serif;
+    background-color: #1e1e2f;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-img {
-    border: 3px solid rgb(255, 255, 255);
+/* Launcher Container */
+.launcher-container {
+    width: 80%;
+    max-width: 1200px;
+    background-color: #2a2a3b;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.launcher-header {
+    background-color: #3b3b4f;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 2px solid #4a4a5e;
+}
+
+.launcher-header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+/* Main Section */
+.launcher-main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.game-list {
+    width: 100%;
+    max-width: 800px;
+    background-color: #4a4a5e;
     border-radius: 10px;
-    position: relative;
-    left: 120px; /* Moves all images to the right */
-    top: 50px;  /* Moves all images down */
-    margin-right: 20px; /* Adds space to the right of each image */
-    margin-top: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.game-list h2 {
+    margin: 0 0 10px;
+    font-size: 1.8rem;
+    color: #ffffff;
+    text-align: center;
+}
+
+.game-list-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.game-list-items li {
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #5a5a6e;
+    border-radius: 5px;
+    color: #ffffff;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.game-list-items li:hover {
+    background-color: #6a6a7e;
+}
+
+/* Add Game Button */
+.add-game-button {
+    background-color: #ff5722;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.add-game-button:hover {
+    background-color: #e64a19;
+    transform: scale(1.05);
+}
+
+/* Footer */
+.launcher-footer {
+    background-color: #3b3b4f;
+    padding: 10px;
+    text-align: center;
+    border-top: 2px solid #4a4a5e;
+}
+
+.launcher-footer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #cccccc;
+}
+/* Popup Window */
+.popup-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #2a2a3b;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 400px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.popup-window h3 {
+    margin: 0 0 15px;
+    font-size: 1.8rem;
+    color: #ffffff;
+}
+
+.popup-window label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 1rem;
+    color: #cccccc;
+}
+
+.popup-window input {
+    width: calc(100% - 20px); /* Adjust width to leave space for padding */
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #4a4a5e;
+    border-radius: 5px;
+    background-color: #3b3b4f;
+    color: #ffffff;
+    font-size: 1rem;
+    box-sizing: border-box; /* Ensures padding is included in width calculation */
+}
+
+.popup-window input::placeholder {
+    color: #aaaaaa;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.popup-buttons button {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.popup-buttons button:first-child {
+    background-color: #4caf50;
+    color: #ffffff;
+}
+
+.popup-buttons button:first-child:hover {
+    background-color: #43a047;
+    transform: scale(1.05);
+}
+
+.popup-buttons button:last-child {
+    background-color: #f44336;
+    color: #ffffff;
+}
+
+.popup-buttons button:last-child:hover {
+    background-color: #e53935;
+    transform: scale(1.05);
+}
+
+/* Overlay for Popup */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 999;
+    display: none;
+}
+
+body.popup-active::before {
+    display: block;
+}
+
+.game-image {
+    width: 100px;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    vertical-align: middle;
 }

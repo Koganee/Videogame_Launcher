@@ -7,66 +7,105 @@
     <title>ZeroE Launcher</title>
 </head>
 <body>
-    <img src="images/metal_bringer.jpg" id = "game1" alt="Metal Bringer" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    <img src="images/the_last_faith.jpg" id = "game2" alt="The Last Faith" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    <img src="images/world_of_horror.jpg" id = "game3" alt="World Of Horror" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    <img src="images/grounded.jpg" id = "game4" alt="Grounded" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    <img src="images/red_dead_redemption.jpg" id = "game5" alt="Red Dead Redemption" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    <img src="images/palworld.jpg" id = "game6" alt="Palworld" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    <img src="images/geneforge_mutagen.jpg" id = "game7" alt="Geneforge: Mutagen" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)"> 
-    <img src="images/tmnt_splintered_fate.jpg" id = "game8" alt="Teenage Mutant Ninja Turtles: Splintered Fate" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    <img src="images/zompiercer.jpg" id = "game9" alt="Zompiercer" width="300" height="200" onclick="launchGame(this.id)" onmouseover="increaseSize(this)" onmouseout="resetSize(this)">
-    
+    <div class="launcher-container">
+        <header class="launcher-header">
+            <h1>ZeroE Launcher</h1>
+        </header>
+        <main class="launcher-main">
+            <div id="gameList" class="game-list">
+                <h2>Game List</h2>
+                <ul id="gameListItems" class="game-list-items"></ul>
+            </div>
+            <button id="addGameButton" class="add-game-button" onclick="openGameWindow()">+ Add Game</button>
+        </main>
+        <footer class="launcher-footer">
+            <p>&copy; 2025 ZeroE Launcher</p>
+        </footer>
+    </div>
+    <script src="renderer.js"></script>
+    <script src="gamesAdding.js"></script>
     <script>
-        const { ipcRenderer } = require('electron');
-
+        // Existing JavaScript functions remain unchanged
         function increaseSize(img) {
-            img.style.transform = "scale(1.2)";  // Increases size by 20%
-            img.style.transition = "transform 0.3s ease";  // Smooth animation
+            img.style.transform = "scale(1.2)";
+            img.style.transition = "transform 0.3s ease";
         }
 
         function resetSize(img) {
-            img.style.transform = "scale(1)";  // Resets to original size
+            img.style.transform = "scale(1)";
         }
 
-        function launchGame(gameId)
-        {
+        function launchGame(gameId) {
             console.log("Launching game with ID:", gameId);
-            
             let gameElement = document.getElementById(gameId);
             if (!gameElement) return;
-
-            let gameTitle = gameElement.alt;
-
-            if (gameTitle) {
-                ipcRenderer.send('launch-game', gameId, gameTitle); // Send the game title to the main process
-                playDing();
-                flashLight(gameId);
-            } else {
-                console.error("Game title is undefined or missing!");
-            }
+            ipcRenderer.send('launch-game', gameId);
+            playDing();
+            flashLight(gameId);
         }
-        function playDing()
-        {
+
+        function playDing() {
             let dingSound = new Audio('audio/game_select.mp3');
             dingSound.play();
         }
-        function flashLight(gameId)
-        {
-            let gameElement = document.getElementById(gameId);
 
+        function flashLight(gameId) {
+            let gameElement = document.getElementById(gameId);
             let isBlack = false;
             let interval = setInterval(() => {
                 gameElement.style.border = isBlack ? "3px solid rgb(255, 255, 255)" : "3px solid black";
                 isBlack = !isBlack;
-            }, 50); // Toggle every 50ms
-
-            // Stop flashing after 2 seconds
+            }, 50);
             setTimeout(() => {
                 clearInterval(interval);
-                gameElement.style.border = "3px solid rgb(255, 255, 255)"; // Reset border
+                gameElement.style.border = "3px solid rgb(255, 255, 255)";
             }, 2000);
         }
+
+        function openGameWindow() {
+            let popup = document.createElement('div');
+            popup.className = 'popup-window';
+            popup.innerHTML = `
+                <h3>Add New Game</h3>
+                <label for="gameName">Game Name:</label>
+                <input type="text" id="gameName" placeholder="Enter game name">
+                <label for="fileLocation">File Location:</label>
+                <input type="text" id="fileLocation" placeholder="Enter file location">
+                <div class="popup-buttons">
+                    <button onclick="submitGame()">Submit</button>
+                    <button onclick="closePopup()">Cancel</button>
+                </div>
+            `;
+            document.body.appendChild(popup);
+        }
+
+        function closePopup() {
+            let popup = document.querySelector('.popup-window');
+            if (popup) document.body.removeChild(popup);
+        }
+
+        function submitGame() {
+        let gameName = document.getElementById('gameName').value;
+        let fileLocation = document.getElementById('fileLocation').value;
+        if (gameName && fileLocation) {
+            console.log('Game Name:', gameName);
+            console.log('File Location:', fileLocation);
+            getSteamAppId(gameName).then(appId => {
+                const imgUrl = `https://cdn.cloudflare.steamstatic.com/steam/apps/${appId}/header.jpg`;
+                addNewGame(gameName, fileLocation, imgUrl); // Pass the image URL
+            });
+            closePopup();
+        } else {
+            alert('Please fill in both fields.');
+        }
+    }
+        
+        async function getSteamAppId(gameName) {
+            const res = await fetch(`https://steamcommunity.com/actions/SearchApps/${encodeURIComponent(gameName)}`);
+            const data = await res.json();
+            return data[0]?.appid; // Get the first result's App ID
+        }
+
     </script>
 </body>
 </html>
